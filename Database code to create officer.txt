@@ -1,0 +1,83 @@
+Database code to create the officers table
+
+CREATE TABLE officers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    officer_number VARCHAR(255) NOT NULL,
+    rank VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    unit VARCHAR(255) NOT NULL,
+    name_in_full VARCHAR(255) NOT NULL,
+    permanent_address VARCHAR(255) NOT NULL,
+    temporary_address VARCHAR(255) NOT NULL,
+    trade VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    district VARCHAR(255) NOT NULL,
+    gs_division VARCHAR(255) NOT NULL,
+    nearest_police_station VARCHAR(255) NOT NULL,
+    wing VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+
+Database code to create the intern table
+
+CREATE TABLE intern (
+    intern_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    name_in_full VARCHAR(255) NOT NULL,
+    permanent_address VARCHAR(255) NOT NULL,
+    university VARCHAR(255) NOT NULL,
+    trade VARCHAR(255) NOT NULL,
+    wing VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    applied_leaves INT(1) NOT NULL
+);
+
+
+
+Database code to create the leave applications table
+
+
+CREATE TABLE leave_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    leave_type VARCHAR(50) NOT NULL,
+    from_date DATE NOT NULL,
+    to_date DATE NOT NULL,
+    from_time TIME NOT NULL,
+    to_time TIME NOT NULL,
+    number_of_days DECIMAL(5, 1) NOT NULL,
+    intern_id VARCHAR(20) NOT NULL,
+    reason TEXT NOT NULL,
+    status1 VARCHAR(10) NOT NULL,
+    status2 VARCHAR(10) NOT NULL,
+    status3 VARCHAR(10) NOT NULL,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE leave_applications_officers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    leave_type VARCHAR(50) NOT NULL,
+    from_date DATE NOT NULL,
+    to_date DATE NOT NULL,
+    from_time TIME NOT NULL,
+    to_time TIME NOT NULL,
+    number_of_days DECIMAL(5, 1) NOT NULL,
+    officer_number VARCHAR(20) NOT NULL,
+    position VARCHAR(20) NOT NULL,
+    reason TEXT NOT NULL,
+    status1 VARCHAR(10) NOT NULL,
+    status2 VARCHAR(10) NOT NULL,
+    status3 VARCHAR(10) NOT NULL,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+Hello !
+Developer 1
