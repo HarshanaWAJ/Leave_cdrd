@@ -8,9 +8,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the intern_id and status from the form submission
     $id = $_POST['id'];
     $newStatus = $_POST['status'];
+    $remark = $_POST['remark'];
 
+    if ($newStatus == 'delete') {
+        $deleteSql = "UPDATE leave_applications_officers SET reason_for_delete = ?, status3 = 'Deleted' WHERE id = ?";
+
+        // Prepare the statement for deleting
+        $stmt = $conn->prepare($deleteSql);
+
+        if ($stmt === false) {
+            echo "Error in preparing delete statement: " . $conn->error;
+        } else {
+            // Bind parameters: 's' for string (reason), 'i' for integer (id)
+            $stmt->bind_param("si", $remark, $id);
+
+            // Execute the statement
+            $result = $stmt->execute();
+
+            if ($result === false) {
+                echo "Error in updating reason for delete: " . $stmt->error;
+            } else {
+                // Redirect to the approval page after delete
+                header("Location: approve_leave_SO1.php?status_deleted=true");
+                exit();
+            }
+            // Close the delete statement
+            $stmt->close();
+        }
+
+    } else {
     // SQL query to update the status in the 'leave_applications' table
-    $updateSql = "UPDATE leave_applications_officers SET status = ? WHERE id = ?";
+    $updateSql = "UPDATE leave_applications_officers SET status = ?, remarks = ? WHERE id = ?";
 
     // Prepare the statement
     $stmt = $conn->prepare($updateSql);
@@ -19,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error in preparing statement: " . $conn->error;
     } else {
         // Bind parameters
-        $stmt->bind_param("ss", $newStatus, $id);
+        $stmt->bind_param("ssi", $newStatus, $remark, $id);
 
         // Execute the statement
         $result = $stmt->execute();
@@ -38,5 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Close the database connection (from db.php)
     $conn->close();
+    }
 }
 ?>

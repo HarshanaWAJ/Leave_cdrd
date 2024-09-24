@@ -70,7 +70,6 @@ $totalCount += $count4;
 }
 
 #table1 {
-    table-layout: fixed;
     width: 100%;
     border-collapse: collapse; /* Ensure borders are not doubled */
 }
@@ -156,7 +155,6 @@ $totalCount += $count4;
 }
 
 #table2 {
-    table-layout: fixed;
     width: 100%;
     border-collapse: collapse; /* Ensure borders are not doubled */
 }
@@ -261,9 +259,29 @@ $totalCount += $count4;
 .icon-spacing {
     margin-right: 10px; /* Add gap between icon and text */
 }
+
+input#remark {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-right: 10px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            margin-bottom: 10px
+        }
+
+        input#remark:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
 </style>
 
 </head>
+
 
 <body>
 <div id="app">
@@ -480,12 +498,16 @@ $totalCount += $count4;
                                     echo "<td>
                                             <form action='update_status_so1.php' method='post'>
                                                 <input type='hidden' name='id' value='{$row['id']}'>
+                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark'>
                                                 <div class='d-flex'>
                                                     <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve' >
-                                                            <i class='fas fa-check small-icon'></i> 
+                                                            <i class='fas fa-check small-icon'></i> Accept
                                                         </button>
                                                         <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline' >
-                                                            <i class='fas fa-times small-icon'></i>
+                                                            <i class='fas fa-times small-icon'></i> Decline
+                                                        </button>
+                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='delete'>
+                                                            <i class='fas fa-trash small-icon'></i> Delete
                                                         </button>
                                                 </div>
                                             </form>
@@ -582,12 +604,16 @@ $totalCount += $count4;
                                     echo "<td>
                                             <form action='update_status_so1_acting.php' method='post'>
                                                 <input type='hidden' name='id' value='{$row['id']}'>
+                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark'>
                                                 <div class='d-flex'>
                                                     <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
-                                                            <i class='fas fa-check small-icon'></i> 
+                                                            <i class='fas fa-check small-icon'></i> Approve
                                                         </button>
                                                         <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i>
+                                                            <i class='fas fa-times small-icon'></i> Decline
+                                                        </button>
+                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='delete'>
+                                                            <i class='fas fa-trash small-icon'></i> Delete
                                                         </button>
                                                 </div>
                                             </form>
@@ -682,19 +708,22 @@ $totalCount += $count4;
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status2_ero.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status2' value='approve'>
-                                                        <i class='fas fa-check small-icon'></i> 
-                                                    </button>
-                                                    <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='decline'>
-                                                        <i class='fas fa-times small-icon'></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>";
-
+                                        <form action='update_status2_ero.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <input type='text' name='remark' id='remark' placeholder='Remark'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status2' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i> Approve
+                                                </button>
+                                                <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='decline'>
+                                                    <i class='fas fa-times small-icon'></i> Decline
+                                                </button>
+                                                <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='delete'>
+                                                    <i class='fas fa-trash small-icon'></i> Delete
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
                                     echo "</tr>";
                                 
                             }
@@ -786,12 +815,16 @@ $totalCount += $count4;
                                     echo "<td>
                                             <form action='update_status3.php' method='post'>
                                                 <input type='hidden' name='id' value='{$row['id']}'>
+                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark or Reason'>
                                                 <div class='d-flex'>
                                                     <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve' >
-                                                            <i class='fas fa-check small-icon'></i> 
+                                                            <i class='fas fa-check small-icon'></i> Accept
                                                         </button>
                                                         <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i>
+                                                            <i class='fas fa-times small-icon'></i> Decline
+                                                        </button>
+                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='delete'>
+                                                            <i class='fas fa-trash small-icon'></i> Delete
                                                         </button>
                                                 </div>
                                             </form>
@@ -820,6 +853,7 @@ $totalCount += $count4;
     <script src="assets/js/vendors.js"></script>
 
     <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>

@@ -52,7 +52,7 @@ if (isset($id)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    $id = $_GET['id'];
     if (
         isset($_POST["officer_number"]) &&
         isset($_POST["name"]) &&
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE id = ?";
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("ssssssssssssi", $officer_number, $name , $position, $numberOfDays, $fromDate, $toDate, $fromTime, $toTime, $leaveType, $reason, $assignedOfficerName, $assignedOfficerId, $id);
+        $stmt->bind_param("ssssssssssssi", $number, $name, $position, $numberOfDays, $fromDate, $toDate, $fromTime, $toTime, $leaveType, $reason, $assignedOfficerName, $assignedOfficerId, $id);
 
        // Execute the statement
        if ($stmt->execute()) {

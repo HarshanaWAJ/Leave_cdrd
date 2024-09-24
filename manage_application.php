@@ -400,6 +400,7 @@ $totalCount += $count4;
                             <table class='table' id="table1">
                                 <thead>
                                     <tr>
+                                        <th>Application ID</th>
                                         <th>Intern ID</th>
                                         <th>Name</th>
                                         <th>From Date</th>
@@ -431,6 +432,7 @@ $totalCount += $count4;
                                         // Output data of each row
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>";
+                                            echo "<td>" . $row["id"] . "</td>";
                                             echo "<td>" . $row["intern_id"] . "</td>";
                                             echo "<td>" . $row["name"] . "</td>";
                                             echo "<td>" . $row["from_date"] . "</td>";
@@ -442,7 +444,6 @@ $totalCount += $count4;
                                                 <a href='view_application_intern.php?id=" .$row['id'] ." 'class='btn btn-info'> View </a>
                                                     <a href='update_appication_intern.php?id=" .$row['id'] ." 'class='btn btn-primary'> Update </a>
                                                     <form id='deleteForm_" . $row["id"] . "' method='post' action='delete_application_intern.php'>
-                                                        <input type='hidden' name='id' value='" . $row["id"] . "'>
                                                         <button type='button' onclick='confirmDelete(" . $row["id"] . ")' class='delete-button btn btn-danger'>Delete</button>
                                                     </form>
                                                 </div>
@@ -465,12 +466,12 @@ $totalCount += $count4;
                 </section>
                 
 
-                <form id="deleteForm_<?php echo $officerId; ?>" method="POST" action="delete_record.php">
+    <form id="deleteForm_<?php echo $id; ?>" method="POST" action="delete_leave_intern.php">
     <!-- Hidden field for officer ID -->
-    <input type="hidden" name="officerId" value="<?php echo $officerId; ?>">
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
 
     <!-- Reason input field -->
-    <input type="hidden" id="deleteReason_<?php echo $officerId; ?>" name="deleteReason" value="">
+    <input type="hidden" id="deleteReason_<?php echo $id; ?>" name="deleteReason" value="">
 </form>
 
             </div>
@@ -485,9 +486,9 @@ $totalCount += $count4;
 
     <script src="assets/js/main.js"></script>
 
-    <script>
-        function toggleEditDelete(officerId) {
-            var button = document.querySelector("button[data-action='delete'][onclick*='" + officerId + "']");
+    <!-- <script>
+        function toggleEditDelete(id) {
+            var button = document.querySelector("button[data-action='delete'][onclick*='" + id + "']");
             
             // Using a custom confirmation dialog
             var userConfirmed = window.confirm("Are you sure you want to delete this officer?");
@@ -501,7 +502,7 @@ $totalCount += $count4;
                 alert("Deletion canceled.");
             }
         }
-    </script>
+    </script> -->
 
 
 <!-- <script>
@@ -526,38 +527,36 @@ $totalCount += $count4;
     }
 </script> -->
 <script>
-    function confirmDelete(officerId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            input: 'textarea',
-            inputLabel: 'Reason for deletion',
-            inputPlaceholder: 'Enter the reason for deletion',
-            inputAttributes: {
-                'aria-label': 'Enter the reason for deletion'
-            },
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            preConfirm: (reason) => {
-                if (!reason) {
-                    Swal.showValidationMessage('You need to enter a reason for deletion');
-                } else {
-                    document.getElementById('deleteReason_' + officerId).value = reason;
-                }
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If user clicks "Yes, delete it!", proceed with deletion
-                var form = document.getElementById('deleteForm_' + officerId);
-                form.submit();
+    function confirmDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        input: 'textarea',
+        inputLabel: 'Reason for deletion',
+        inputPlaceholder: 'Enter the reason for deletion',
+        inputAttributes: {
+            'aria-label': 'Enter the reason for deletion'
+        },
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        preConfirm: (reason) => {
+            if (!reason) {
+                Swal.showValidationMessage('You need to enter a reason for deletion');
             } else {
-                // If user clicks "Cancel", do nothing or add additional handling as needed
+                document.getElementById('deleteReason_' + id).value = reason;
             }
-        });
-    }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var form = document.getElementById('deleteForm_' + id);
+            form.submit();
+        }
+    });
+}
+
 </script>
 
 

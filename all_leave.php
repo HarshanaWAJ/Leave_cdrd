@@ -203,7 +203,9 @@ exit;
                                         <th>Leave Type</th>
                                         <th>Number of Days</th>
                                         <th>From Date</th>
-                                        <th>To date</th>
+                                        <th>To Date</th>
+                                        <th>From Time </th>
+                                        <th>To Time </th>
                                     </tr>
                                 </thead>
                                 <tbody id="leaveTableBody2">
@@ -226,6 +228,8 @@ exit;
                                             echo "<td>" . $row['number_of_days'] . "</td>";
                                             echo "<td>" . $row['from_date'] . "</td>";
                                             echo "<td>" . $row['to_date'] . "</td>";
+                                            echo "<td>" . $row['from_time'] . "</td>";
+                                            echo "<td>" . $row['to_time'] . "</td>";
                                             echo "</tr>";
                                         }
                                     } else {
@@ -255,39 +259,49 @@ exit;
                                         <th>Leave Type</th>
                                         <th>Number of Days</th>
                                         <th>From Date</th>
-                                        <th>To date</th>
+                                        <th>To Date</th>
+                                        <th>From Time </th>
+                                        <th>To Time </th>
                                     </tr>
                                 </thead>
                                 <tbody id="leaveTableBody">
                                 <?php
-                                    // Include the database connection file
-                                    include 'db.php';
+                                // Include the database connection file
+                                include 'db.php';
 
-                                    // SQL query to retrieve all leaves from leave_applications table
-                                    $sql = "SELECT * FROM leave_applications";
-                                    $result = $conn->query($sql);
+                                // SQL query to retrieve all leaves from leave_applications table
+                                $sql = "SELECT * FROM leave_applications;";
+                                $result = $conn->query($sql);
 
-                                    // Check if there are any rows in the result set
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            // Output each row as a table row
-                                            echo "<tr>";
-                                            echo "<td>" . $row['intern_id'] . "</td>";
-                                            echo "<td>" . $row['name'] . "</td>";
-                                            echo "<td>" . $row['leave_type'] . "</td>";
-                                            echo "<td>" . $row['number_of_days'] . "</td>";
-                                            echo "<td>" . $row['from_date'] . "</td>";
-                                            echo "<td>" . $row['to_date'] . "</td>";
-                                            echo "</tr>";
-                                        }
-                                    } else {
-                                        // Output a message if there are no leaves in the table
-                                        echo "<tr><td colspan='12'>No leaves found</td></tr>";
+                                // Check if there are any rows in the result set
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        // Format time strings to exclude milliseconds
+                                        $formattedFromTime = date('H:i', strtotime($row['from_time']));
+                                        $formattedToTime = date('H:i', strtotime($row['to_time']));
+
+                                        // Output each row as a table row
+                                        echo "<tr>";
+                                        echo "<td>" . htmlspecialchars($row['intern_id']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['leave_type']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['number_of_days']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['from_date']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($row['to_date']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($formattedFromTime) . "</td>";
+                                        echo "<td>" . htmlspecialchars($formattedToTime) . "</td>";
+                                        echo "</tr>";
                                     }
+                                } else {
+                                    // Output a message if there are no leaves in the table
+                                    echo "<tr><td colspan='8'>No leaves found</td></tr>";
+                                }
 
-                                    // Close the database connection
-                                    $conn->close();
-                                    ?>
+                                // Close the database connection
+                                $conn->close();
+                                ?>
+
+
                                 </tbody>
                             </table>
                         </div>

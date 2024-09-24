@@ -3,16 +3,15 @@ include 'db.php'; // Include your database connection file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the required fields are set in $_POST
-    if (isset($_POST["officerId"]) && isset($_POST["deleteReason"])) {
-        $officerId = filter_input(INPUT_POST, "officerId", FILTER_SANITIZE_STRING);
+    if (isset($_POST["id"]) && isset($_POST["deleteReason"])) {
+        $officerId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_STRING);
         $deleteReason = filter_input(INPUT_POST, "deleteReason", FILTER_SANITIZE_STRING);
 
         // Update your database with the reason for deletion
-        $sql = "UPDATE leave_applications_officers SET delete_record = ? WHERE officer_id = ?";
+        $sql = "UPDATE leave_applications SET reason_for_delete = ? WHERE id = ?";
         
         if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("ss", $deleteReason, $officerId);
-            
+            $stmt->bind_param("si", $deleteReason, $id);
             if ($stmt->execute()) {
                 echo "<script>
                     Swal.fire({
