@@ -274,7 +274,7 @@ $totalCount += $count4;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
+                                    <?php
                                     // Include the database connection file
                                     include 'db.php';
 
@@ -303,25 +303,26 @@ $totalCount += $count4;
                                             echo "<td>" . $row["to_time"] . "</td>";
                                             echo "<td>
                                                 <div class='action-buttons' style='display: flex; gap: 10px;'>
-                                                <a href='view_application.php?id=" .$row['id'] ." 'class='btn btn-info'> View </a>
-                                                    <a href='update_appication.php?id=" .$row['id'] ." 'class='btn btn-primary'> Update </a>
-                                                    <form id='deleteForm_" . $row["id"] . "' method='post' action='delete_application.php'>
-                                                        <input type='hidden' name='id' value='" . $row["id"] . "'>
-                                                        <button type='button' onclick='confirmDelete(" . $row["id"] . ")' class='delete-button btn btn-danger'>Delete</button>
+                                                    <a href='view_application.php?id=" . $row['id'] . "' class='btn btn-info'> View </a>
+                                                    <a href='update_application.php?id=" . $row['id'] . "' class='btn btn-primary'> Update </a>
+                                                    <form id='deleteForm_" . $row['id'] . "' method='post' action='delete_application.php'>
+                                                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                                                        <input type='hidden' name='reason_for_delete' id='deleteReason_" . $row['id'] . "'>
+                                                        <button type='button' onclick='confirmDelete(" . $row['id'] . ")' class='delete-button btn btn-danger'>Delete</button>
                                                     </form>
                                                 </div>
-                                                </td>"; // Assuming there is an 'id' column in your table
+                                                </td>";
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='4'>No records found</td></tr>";
+                                        echo "<tr><td colspan='7'>No records found</td></tr>"; // Adjust the colspan according to the number of columns
                                     }
 
                                     // Close the connection
                                     $conn->close();
                                     ?>
-
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -373,10 +374,11 @@ $totalCount += $count4;
                                                 <div class='action-buttons' style='display: flex; gap: 10px;'>
                                                 <a href='view_application_ero.php?id=" .$row['id'] ." 'class='btn btn-info'> View </a>
                                                     <a href='update_appication_ero.php?id=" .$row['id'] ." 'class='btn btn-primary'> Update </a>
-                                                    <form id='deleteForm_" . $row["id"] . "' method='post' action='delete_application_ero.php'>
-                                                        <input type='hidden' name='id' value='" . $row["id"] . "'>
-                                                        <button type='button' onclick='confirmDelete(" . $row["id"] . ")' class='delete-button btn btn-danger'>Delete</button>
-                                                    </form>
+                                                    <form id='deleteForm_" . $row['id'] . "' method='post' action='delete_application_ero.php'>
+                                                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                                                            <input type='hidden' name='reason_for_delete' id='deleteReason_" . $row['id'] . "'>
+                                                            <button type='button' onclick='confirmDelete(" . $row['id'] . ")' class='delete-button btn btn-danger'>Delete</button>
+                                                        </form>
                                                 </div>
                                                 </td>"; // Assuming there is an 'id' column in your table
                                             echo "</tr>";
@@ -411,54 +413,55 @@ $totalCount += $count4;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                    // Include the database connection file
-                                    include 'db.php';
+                                    <?php
+                                        // Include the database connection file
+                                        include 'db.php';
 
-                                    // Create a connection
-                                    $conn = new mysqli($servername, $username, $password, $dbname);
+                                        // Create a connection
+                                        $conn = new mysqli($servername, $username, $password, $dbname);
 
-                                    // Check the connection
-                                    if ($conn->connect_error) {
-                                        die("Connection failed: " . $conn->connect_error);
-                                    }
-
-                                    // SQL query to retrieve officer details
-                                    $sql = "SELECT * FROM leave_applications";
-                                    $result = $conn->query($sql);
-
-                                    // Check if there are rows in the result set
-                                    if ($result->num_rows > 0) {
-                                        // Output data of each row
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td>" . $row["id"] . "</td>";
-                                            echo "<td>" . $row["intern_id"] . "</td>";
-                                            echo "<td>" . $row["name"] . "</td>";
-                                            echo "<td>" . $row["from_date"] . "</td>";
-                                            echo "<td>" . $row["to_date"] . "</td>";
-                                            echo "<td>" . $row["from_time"] . "</td>";
-                                            echo "<td>" . $row["to_time"] . "</td>";
-                                            echo "<td>
-                                                <div class='action-buttons' style='display: flex; gap: 10px;'>
-                                                <a href='view_application_intern.php?id=" .$row['id'] ." 'class='btn btn-info'> View </a>
-                                                    <a href='update_appication_intern.php?id=" .$row['id'] ." 'class='btn btn-primary'> Update </a>
-                                                    <form id='deleteForm_" . $row["id"] . "' method='post' action='delete_application_intern.php'>
-                                                        <button type='button' onclick='confirmDelete(" . $row["id"] . ")' class='delete-button btn btn-danger'>Delete</button>
-                                                    </form>
-                                                </div>
-                                                </td>"; // Assuming there is an 'id' column in your table
-                                            echo "</tr>";
+                                        // Check the connection
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
                                         }
-                                    } else {
-                                        echo "<tr><td colspan='4'>No records found</td></tr>";
-                                    }
 
-                                    // Close the connection
-                                    $conn->close();
+                                        // SQL query to retrieve officer details
+                                        $sql = "SELECT * FROM leave_applications";
+                                        $result = $conn->query($sql);
+
+                                        // Check if there are rows in the result set
+                                        if ($result->num_rows > 0) {
+                                            // Output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row["id"] . "</td>";
+                                                echo "<td>" . $row["intern_id"] . "</td>";
+                                                echo "<td>" . $row["name"] . "</td>";
+                                                echo "<td>" . $row["from_date"] . "</td>";
+                                                echo "<td>" . $row["to_date"] . "</td>";
+                                                echo "<td>" . $row["from_time"] . "</td>";
+                                                echo "<td>" . $row["to_time"] . "</td>";
+                                                echo "<td>
+                                                    <div class='action-buttons' style='display: flex; gap: 10px;'>
+                                                        <a href='view_application_intern.php?id=" . $row['id'] . "' class='btn btn-info'> View </a>
+                                                        <a href='update_application_intern.php?id=" . $row['id'] . "' class='btn btn-primary'> Update </a>
+                                                        <form id='deleteForm_" . $row['id'] . "' method='post' action='delete_application_intern.php'>
+                                                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                                                            <input type='hidden' name='reason_for_delete' id='deleteReason_" . $row['id'] . "'>
+                                                            <button type='button' onclick='confirmDelete(" . $row['id'] . ")' class='delete-button btn btn-danger'>Delete</button>
+                                                        </form>
+                                                    </div>
+                                                    </td>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='8'>No records found</td></tr>";
+                                        }
+
+                                        // Close the connection
+                                        $conn->close();
                                     ?>
-
-                                </tbody>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
@@ -504,28 +507,6 @@ $totalCount += $count4;
         }
     </script> -->
 
-
-<!-- <script>
-    function confirmDelete(officerId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If user clicks "Yes, delete it!", proceed with deletion
-                var form = document.getElementById('deleteForm_' + officerId);
-                form.submit();
-            } else {
-                // If user clicks "Cancel", do nothing or add additional handling as needed
-            }
-        });
-    }
-</script> -->
 <script>
     function confirmDelete(id) {
     Swal.fire({
@@ -545,20 +526,21 @@ $totalCount += $count4;
         preConfirm: (reason) => {
             if (!reason) {
                 Swal.showValidationMessage('You need to enter a reason for deletion');
+                return false;
             } else {
+                // Set the reason in the hidden input field
                 document.getElementById('deleteReason_' + id).value = reason;
             }
         }
     }).then((result) => {
         if (result.isConfirmed) {
+            // Get the form by the id and submit it
             var form = document.getElementById('deleteForm_' + id);
-            form.submit();
+            form.submit(); // Submit the form after confirmation
         }
     });
 }
-
 </script>
-
 
 </body>
 
