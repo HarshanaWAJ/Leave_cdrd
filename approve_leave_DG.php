@@ -288,6 +288,34 @@ $totalCount = $count1 + $count2;
                                 }
                             }
 
+                            //Function to Display the Halfday 
+                        function formatNumberOfDays($numberOfDays) {
+                            // Convert the number to a float if it's not already
+                            $numberOfDays = floatval($numberOfDays);
+                            
+                            // Get the integer part and decimal part
+                            $integerPart = floor($numberOfDays);
+                            $decimalPart = $numberOfDays - $integerPart;
+                            
+                            // Prepare the readable format
+                            $formattedDays = '';
+                                if ($integerPart > 0) {
+                                    $formattedDays .= $integerPart . ' day';
+                                    if ($integerPart > 1) {
+                                        $formattedDays .= 's';
+                                    }
+                                }
+                                
+                                if ($decimalPart >= 0.5) {
+                                    if ($formattedDays) {
+                                        $formattedDays .= ' and ';
+                                    }
+                                    $formattedDays .= 'half day';
+                                }
+                                
+                                return $formattedDays ?: '0 days';
+                            }
+
                             // SQL query to fetch all columns from the 'leave_applications_officers' table
                             $sql = "SELECT * FROM leave_applications_officers 
                         WHERE position != 'Director General' 
@@ -332,7 +360,8 @@ $totalCount = $count1 + $count2;
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    echo "<td>" . $row['number_of_days'] . "</td>";
+                                    // Format the number_of_days using the helper function
+                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -434,7 +463,8 @@ $totalCount = $count1 + $count2;
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    echo "<td>" . $row['number_of_days'] . "</td>";
+                                    // Format the number_of_days using the helper function
+                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
