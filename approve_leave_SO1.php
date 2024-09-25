@@ -259,29 +259,9 @@ $totalCount += $count4;
 .icon-spacing {
     margin-right: 10px; /* Add gap between icon and text */
 }
-
-input#remark {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-right: 10px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-            margin-bottom: 10px
-        }
-
-        input#remark:focus {
-            border-color: #80bdff;
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
-        }
-
 </style>
 
 </head>
-
 
 <body>
 <div id="app">
@@ -437,35 +417,6 @@ input#remark {
                                 }
                             }
 
-                            //Function to Display the Halfday 
-                            function formatNumberOfDays($numberOfDays) {
-                                // Convert the number to a float if it's not already
-                                $numberOfDays = floatval($numberOfDays);
-                                
-                                // Get the integer part and decimal part
-                                $integerPart = floor($numberOfDays);
-                                $decimalPart = $numberOfDays - $integerPart;
-                                
-                                // Prepare the readable format
-                                $formattedDays = '';
-                                    if ($integerPart > 0) {
-                                        $formattedDays .= $integerPart . ' day';
-                                        if ($integerPart > 1) {
-                                            $formattedDays .= 's';
-                                        }
-                                    }
-                                    
-                                    if ($decimalPart >= 0.5) {
-                                        if ($formattedDays) {
-                                            $formattedDays .= ' and ';
-                                        }
-                                        $formattedDays .= 'half day';
-                                    }
-                                    
-                                    return $formattedDays ?: '0 days';
-                                }
-
-
                             // SQL query to fetch all columns from the 'leave_applications_officers' table
                             $sql = "SELECT * 
                             FROM leave_applications_officers 
@@ -511,11 +462,7 @@ input#remark {
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
-                                    echo "<td>" . $formattedDays . "</td>";
-
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -529,22 +476,28 @@ input#remark {
                                     $disabled = $isApproved ? '' : 'disabled';
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status_so1.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve' >
-                                                            <i class='fas fa-check small-icon'></i> Accept
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline' >
-                                                            <i class='fas fa-times small-icon'></i> Decline
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='delete'>
-                                                            <i class='fas fa-trash small-icon'></i> Delete
-                                                        </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                    <form action='update_status_snco.php' method='post'>
+                                        <input type='hidden' name='id' value='{$row['id']}'>
+                                        <div class='d-flex'>
+                                            <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                <i class='fas fa-check small-icon'></i>Accept
+                                            </button>
+                                            <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                <i class='fas fa-times small-icon'></i>Decline
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>";
+
+                            echo "<script>
+                                function confirmDecline(form) {
+                                    if (confirm('Are you sure you want to decline?')) {
+                                        form.status.value = 'decline';
+                                        form.submit();
+                                    }
+                                }
+                            </script>";
+
 
                                     echo "</tr>";
                                 }
@@ -623,9 +576,7 @@ input#remark {
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
-                                    echo "<td>" . $formattedDays . "</td>";
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -637,22 +588,28 @@ input#remark {
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status_so1_acting.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
-                                                            <i class='fas fa-check small-icon'></i> Approve
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i> Decline
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='delete'>
-                                                            <i class='fas fa-trash small-icon'></i> Delete
-                                                        </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_snco.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                     }
@@ -730,9 +687,7 @@ input#remark {
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
-                                    echo "<td>" . $formattedDays . "</td>";
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -745,22 +700,29 @@ input#remark {
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                        <form action='update_status2_ero.php' method='post'>
+                                        <form action='update_status_snco.php' method='post'>
                                             <input type='hidden' name='id' value='{$row['id']}'>
-                                            <input type='text' name='remark' id='remark' placeholder='Remark'>
                                             <div class='d-flex'>
-                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status2' value='approve'>
-                                                    <i class='fas fa-check small-icon'></i> Approve
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
                                                 </button>
-                                                <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='decline'>
-                                                    <i class='fas fa-times small-icon'></i> Decline
-                                                </button>
-                                                <button type='submit' class='btn btn-danger me-2 custom-btn' name='status2' value='delete'>
-                                                    <i class='fas fa-trash small-icon'></i> Delete
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
                                                 </button>
                                             </div>
                                         </form>
                                     </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
+
                                     echo "</tr>";
                                 
                             }
@@ -836,9 +798,7 @@ input#remark {
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
-                                    echo "<td>" . $formattedDays . "</td>";
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -852,22 +812,28 @@ input#remark {
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status3.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <input type = 'text' name = 'remark' id = 'remark' placeholder = 'Remark or Reason'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve' >
-                                                            <i class='fas fa-check small-icon'></i> Accept
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i> Decline
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='delete'>
-                                                            <i class='fas fa-trash small-icon'></i> Delete
-                                                        </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_snco.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                 }
@@ -892,7 +858,6 @@ input#remark {
     <script src="assets/js/vendors.js"></script>
 
     <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

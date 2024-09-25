@@ -139,7 +139,7 @@ $force = isset($_POST['forcee']) ? $_POST['forcee'] : '';
                 <div class="row mb-3">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of Interns</h3>
+                        <h3>Approved Leaves of Interns</h3>
                             <table class='table' id="table2">
                             <div class="row mb-3">
                             <div class="row mb-3">

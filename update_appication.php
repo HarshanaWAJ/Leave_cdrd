@@ -52,7 +52,7 @@ if (isset($id)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_GET['id'];
+
     if (
         isset($_POST["officer_number"]) &&
         isset($_POST["name"]) &&
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 
     $sql = "UPDATE leave_applications_officers SET
-           officer_number = ?, 
+            officer_number = ?, 
             name = ?, 
             position = ?, 
             number_of_days = ?, 
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE id = ?";
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("ssssssssssssi", $number, $name, $position, $numberOfDays, $fromDate, $toDate, $fromTime, $toTime, $leaveType, $reason, $assignedOfficerName, $assignedOfficerId, $id);
+        $stmt->bind_param("ssssssssssssi", $officer_number, $name , $position, $numberOfDays, $fromDate, $toDate, $fromTime, $toTime, $leaveType, $reason, $assignedOfficerName, $assignedOfficerId, $id);
 
        // Execute the statement
        if ($stmt->execute()) {
@@ -413,7 +413,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     <i class="fa fa-id-card"></i>
                                                                 </div>
                                                             </div>
-                                                            
                                                         </div>
                                                     </div>
 
@@ -463,7 +462,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Swal.fire({
                 icon: 'success',
                 title: 'Updated',
-                text: 'Leave Applocation updated successfully!',
+                text: 'Leave Application updated successfully!',
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = 'manage_application.php';

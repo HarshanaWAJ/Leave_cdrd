@@ -9,11 +9,9 @@
           exit;
           }
 
-        // Function to determine overall status for SO1 based on responses
+        // Function to determine overall status based on responses
         function determineOverallStatus1($response1, $response2) {
-            if ($response2 == 'Deleted') {
-                return 'Deleted';
-            } elseif ($response2 == 'approve') {
+            if ($response2 == 'approve' ) {
                 return 'approve';
             } elseif ($response1 == 'decline' || $response2 == 'decline') {
                 return 'decline';
@@ -32,11 +30,8 @@
             }
         }
 
-        // Function to determine overall status for all responses
         function determineOverallStatus($response1, $response2, $response3) {
-            if ($response3 == 'Deleted') {
-                return 'Deleted';
-            } elseif ($response1 == 'approve' && $response2 == 'approve' && $response3 == 'approve') {
+            if ($response1 == 'approve' && $response2 == 'approve' && $response3 == 'approve') {
                 return 'approve';
             } elseif ($response1 == 'decline' || $response2 == 'decline' || $response3 == 'decline') {
                 return 'decline';
@@ -303,9 +298,6 @@
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                         break;
-                                                    case 'Deleted':
-                                                            echo "<button class='btn btn-warning fixed-width-button'>Deleted</button>";
-                                                            break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                 }
@@ -322,9 +314,6 @@
                                                         break;
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
-                                                        break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
                                                         break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
@@ -343,9 +332,6 @@
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                         break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
-                                                        break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                 }
@@ -363,9 +349,6 @@
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                         break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
-                                                            break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                 }

@@ -65,7 +65,6 @@ $totalCount = $count1 + $count2;
 }
 
 #table1 {
-    table-layout: fixed;
     width: 100%;
     border-collapse: collapse; /* Ensure borders are not doubled */
 }
@@ -446,18 +445,28 @@ $totalCount = $count1 + $count2;
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status_research_officer.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
-                                                            <i class='fas fa-check small-icon'></i> 
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i>
-                                                        </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_snco.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                     }
@@ -547,18 +556,28 @@ $totalCount = $count1 + $count2;
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                               <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
-                                                            <i class='fas fa-check small-icon'></i> 
-                                                        </button>
-                                                        <button type='submit' class='btn btn-danger me-2 custom-btn' name='status' value='decline'>
-                                                            <i class='fas fa-times small-icon'></i>
-                                                        </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_snco.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                     }

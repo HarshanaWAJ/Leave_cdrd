@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newStatus = $_POST['status'];
 
     // SQL query to update the status in the 'leave_applications' table
-    $updateSql = "UPDATE leave_applications_officers SET status = ? WHERE id = ?";
+    $updateSql = "UPDATE leave_applications_officers SET status3 = ? WHERE id = ?";
 
     // Prepare the statement
     $stmt = $conn->prepare($updateSql);
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error in preparing statement: " . $conn->error;
     } else {
         // Bind parameters
-        $stmt->bind_param("ss", $newStatus, $id);
+        $stmt->bind_param("si", $newStatus, $id);
 
         // Execute the statement
         $result = $stmt->execute();
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error in updating status: " . $stmt->error;
         } else {
             // Redirect back to the original page with a success parameter
-            header("Location: approve_leave_snco.php?status_updated=true");
+            header("Location: approve_leave_DG.php?status_updated=true");
             exit();
         }
 
