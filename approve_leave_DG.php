@@ -56,7 +56,6 @@ $totalCount = $count1 + $count2;
         color: #000 !important; /* Set the text color to black */
     }
     #table2 {
-    table-layout: fixed;
     width: 100%;
     border-collapse: collapse; /* Ensure borders are not doubled */
 }
@@ -288,34 +287,6 @@ $totalCount = $count1 + $count2;
                                 }
                             }
 
-                            //Function to Display the Halfday 
-                        function formatNumberOfDays($numberOfDays) {
-                            // Convert the number to a float if it's not already
-                            $numberOfDays = floatval($numberOfDays);
-                            
-                            // Get the integer part and decimal part
-                            $integerPart = floor($numberOfDays);
-                            $decimalPart = $numberOfDays - $integerPart;
-                            
-                            // Prepare the readable format
-                            $formattedDays = '';
-                                if ($integerPart > 0) {
-                                    $formattedDays .= $integerPart . ' day';
-                                    if ($integerPart > 1) {
-                                        $formattedDays .= 's';
-                                    }
-                                }
-                                
-                                if ($decimalPart >= 0.5) {
-                                    if ($formattedDays) {
-                                        $formattedDays .= ' and ';
-                                    }
-                                    $formattedDays .= 'half day';
-                                }
-                                
-                                return $formattedDays ?: '0 days';
-                            }
-
                             // SQL query to fetch all columns from the 'leave_applications_officers' table
                             $sql = "SELECT * FROM leave_applications_officers 
                         WHERE position != 'Director General' 
@@ -360,8 +331,7 @@ $totalCount = $count1 + $count2;
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -375,18 +345,28 @@ $totalCount = $count1 + $count2;
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status_dg.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve' >
-                                                        <i class='fas fa-check small-icon'></i> 
-                                                    </button>
-                                                    <button type='submit'  class='btn btn-danger me-2 custom-btn' name='status' value='decline' >
-                                                        <i class='fas fa-times small-icon'></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_snco.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                 }
@@ -463,8 +443,7 @@ $totalCount = $count1 + $count2;
                                     echo "<td>" . $row['to_date'] . "</td>";
                                     echo "<td>" . $row['from_time'] . "</td>";
                                     echo "<td>" . $row['to_time'] . "</td>";
-                                    // Format the number_of_days using the helper function
-                                    $formattedDays = formatNumberOfDays($row['number_of_days']);
+                                    echo "<td>" . $row['number_of_days'] . "</td>";
                                     echo "<td>" . $row['reason'] . "</td>";
                                     echo "<td>" . $row['remarks'] . "</td>";
 
@@ -477,18 +456,28 @@ $totalCount = $count1 + $count2;
 
                                     // Display the selected action in the "Status" column as a button
                                     echo "<td>
-                                            <form action='update_status3_ero.php' method='post'>
-                                                <input type='hidden' name='id' value='{$row['id']}'>
-                                                <div class='d-flex'>
-                                                    <button type='submit' class='btn btn-success me-2 custom-btn' name='status3' value='approve'>
-                                                        <i class='fas fa-check small-icon'></i> 
-                                                    </button>
-                                                    <button type='submit' class='btn btn-danger me-2 custom-btn' name='status3' value='decline'>
-                                                        <i class='fas fa-times small-icon'></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>";
+                                        <form action='update_status_dg_ex_re_officers.php' method='post'>
+                                            <input type='hidden' name='id' value='{$row['id']}'>
+                                            <div class='d-flex'>
+                                                <button type='submit' class='btn btn-success me-2 custom-btn' name='status' value='approve'>
+                                                    <i class='fas fa-check small-icon'></i>Accept
+                                                </button>
+                                                <button type='button' class='btn btn-danger me-2 custom-btn' name='status' value='decline' onclick='confirmDecline(this.form)'>
+                                                    <i class='fas fa-times small-icon'></i>Decline
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>";
+
+                                echo "<script>
+                                    function confirmDecline(form) {
+                                        if (confirm('Are you sure you want to decline?')) {
+                                            form.status.value = 'decline';
+                                            form.submit();
+                                        }
+                                    }
+                                </script>";
+
 
                                     echo "</tr>";
                                 

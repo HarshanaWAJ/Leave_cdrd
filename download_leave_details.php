@@ -138,7 +138,7 @@ $force = isset($_POST['forcee']) ? $_POST['forcee'] : '';
                     <section class="section">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of Officers</h3>
+                        <h3>Approved Leaves of Officers</h3>
                             
                         <div style = 'overflow-x: auto;'>;
                             <table class='table' id="table1">
@@ -233,10 +233,108 @@ $force = isset($_POST['forcee']) ? $_POST['forcee'] : '';
                 </section>
                 
                 <section class="section">
+                    <div class="card">
+                        <div class="card-body">
+                        <h3>Approved Leaves of External Officers</h3>
+                            
+                        <div style = 'overflow-x: auto;'>;
+                            <table class='table' id="table1">
+                                <thead>
+                                    <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Rank</th>
+                                    <th>Leave Type</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Number Of Days</th>
+                                    <th>Reason</th>
+                                    <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaveTableBody2">
+                                <?php
+                                    // Include the database connection file
+                                    include 'db.php';
+
+                                    // SQL query to retrieve all leaves from leave_applications table
+                                    $sql = "SELECT leave_applications_officers.*, officers.* 
+                                    FROM leave_applications_officers 
+                                    INNER JOIN officers ON leave_applications_officers.officer_number = officers.officer_number
+                                    WHERE from_date BETWEEN '$fromDate' AND '$toDate' AND
+                                    ((leave_applications_officers.position = 'Research Officer' AND 
+                                        leave_applications_officers.status = 'approve' AND 
+                                        leave_applications_officers.status1 = 'approve' AND 
+                                        leave_applications_officers.status2 = 'approve' AND 
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Quater Master' AND 
+                                    leave_applications_officers.status = 'approve' AND
+                                    leave_applications_officers.status2 = 'approve' AND
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Account Officer' AND 
+                                    leave_applications_officers.status2 = 'approve' AND
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Wing Head' AND 
+                                        leave_applications_officers.status2 = 'approve' AND 
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Staff Officer 1' AND
+                                    leave_applications_officers.status = 'approve' AND 
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Cheif Controller' AND 
+                                    leave_applications_officers.status = 'approve' AND
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Cheif Coordinator' AND 
+                                    leave_applications_officers.status = 'approve' AND
+                                        leave_applications_officers.status3 = 'approve')
+                                    OR
+                                    (leave_applications_officers.position = 'Deputy Director Gene' AND 
+                                    leave_applications_officers.status = 'approve' AND
+                                        leave_applications_officers.status3 = 'approve'))";
+                                    $result = $conn->query($sql);
+
+                                    // Check if there are any rows in the result set
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            // Output each row as a table row
+                                            echo "<tr>";
+                                            echo '<td>' . $row['officer_number'] . '</td>';
+                                            echo '<td>' . $row['name'] . '</td>';
+                                            echo '<td>' . $row['rank'] . '</td>';
+                                            echo '<td>' . $row['leave_type'] . '</td>';
+                                            echo '<td>' . $row['from_date'] . '</td>';
+                                            echo '<td>' . $row['to_date'] . '</td>';
+                                            echo '<td>' . $row['number_of_days'] . '</td>';
+                                            echo '<td>' . $row['reason'] . '</td>';
+                                            echo '<td>' . $row['remarks'] . '</td>';
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        // Output a message if there are no leaves in the table
+                                        echo "<tr><td colspan='12'>No leaves found</td></tr>";
+                                    }
+
+                                    // Close the database connection
+                                    $conn->close();
+                                    ?>
+                                </tbody>
+                            </table>
+                            <button id="downloadOfficerBtn" class="btn btn-secondary" onclick="downloadOfficer()">Download Officer Data</button>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="section">
                 <div class="row mb-3">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of Interns</h3>
+                        <h3>Approved Leaves of Interns</h3>
                             <table class='table' id="table2">
                             <div class="row mb-3">
                             <div class="row mb-3">

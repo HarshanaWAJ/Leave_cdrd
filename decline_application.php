@@ -377,6 +377,58 @@ $totalCount += $count4;
                         </div>
                     </div>
                 </section>
+
+                <section class="section">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Decline Applications of Interns</h3>
+                        <div style = 'overflow-x: auto;'>;
+                            <table class='table' id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>Officer Number</th>
+                                        <th>Full Name</th>
+                                        <th>Leave Type</th>
+                                        <th>Number of Days</th>
+                                        <th>From Date</th>
+                                        <th>To date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaveTableBody2">
+                                <?php
+                                    // Include the database connection file
+                                    include 'db.php';
+
+                                    // SQL query to retrieve all leaves from leave_applications table
+                                    $sql = "SELECT * FROM leave_applications_officers where status3='decline' ";
+                                    $result = $conn->query($sql);
+
+                                    // Check if there are any rows in the result set
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            // Output each row as a table row
+                                            echo "<tr>";
+                                            echo "<td>" . $row['officer_number'] . "</td>";
+                                            echo "<td>" . $row['name'] . "</td>";
+                                            echo "<td>" . $row['leave_type'] . "</td>";
+                                            echo "<td>" . $row['number_of_days'] . "</td>";
+                                            echo "<td>" . $row['from_date'] . "</td>";
+                                            echo "<td>" . $row['to_date'] . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        // Output a message if there are no leaves in the table
+                                        echo "<tr><td colspan='12'>No Decline Applications found</td></tr>";
+                                    }
+
+                                    // Close the database connection
+                                    $conn->close();
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>

@@ -13,11 +13,7 @@
         function determineOverallStatus1($response1, $response2) {
             if ($response2 == 'approve' ) {
                 return 'approve';
-            } 
-            elseif ($response1 == 'Deleted' || $response2 == 'Deleted') {
-                return 'Deleted';
-            }
-            elseif ($response1 == 'decline' || $response2 == 'decline') {
+            } elseif ($response1 == 'decline' || $response2 == 'decline') {
                 return 'decline';
             } else {
                 return 'pending';
@@ -27,11 +23,7 @@
         function determineOverallStatus2($response1, $response2, $response3) {
             if ($response3 == 'approve') {
                 return 'approve';
-            } 
-            elseif ($response1 == 'Deleted' || $response2 == 'Deleted' || $response3 == 'Deleted') {
-                return 'Deleted';
-            }
-            elseif ($response1 == 'decline' || $response2 == 'decline' || $response3 == 'decline') {
+            } elseif ($response1 == 'decline' || $response2 == 'decline' || $response3 == 'decline') {
                 return 'decline';
             } else {
                 return 'pending';
@@ -43,11 +35,7 @@
                 return 'approve';
             } elseif ($response1 == 'decline' || $response2 == 'decline' || $response3 == 'decline') {
                 return 'decline';
-            }
-            elseif ($response1 == 'Deleted' || $response2 == 'Deleted' || $response3 == 'Deleted') {
-                return 'Deleted';
-            }
-            else {
+            } else {
                 return 'pending';
             }
         }
@@ -327,9 +315,6 @@
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                         break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
-                                                        break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                 }
@@ -347,9 +332,6 @@
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                         break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
-                                                        break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
                                                 }
@@ -366,9 +348,6 @@
                                                         break;
                                                     case 'pending':
                                                         echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";
-                                                        break;
-                                                    case 'Deleted':
-                                                        echo "<button class='btn btn-danger fixed-width-button'>Deleted</button>"; // Red button for "Deleted"
                                                         break;
                                                     default:
                                                     echo "<button class='btn btn-warning fixed-width-button'>Pending</button>";

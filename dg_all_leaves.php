@@ -171,7 +171,7 @@ $totalCount = $count1 + $count2;
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>All Leaves</h3>
+                            <h3>All Approved Leaves</h3>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class='breadcrumb-header'>
@@ -205,7 +205,7 @@ $totalCount = $count1 + $count2;
                     <section class="section">
                     <div class="card">
                         <div class="card-body">
-                            <h3>All Leaves of Officers</h3>
+                            <h3>Approved Leaves of Officers</h3>
                         <div style = 'overflow-x: auto;'>;
                             <table class='table' id="table1">
                                 <thead>
@@ -253,10 +253,63 @@ $totalCount = $count1 + $count2;
                         </div>
                     </div>
                 </section>
+
                 <section class="section">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of Interns</h3>
+                            <h3>Approved Leaves of External Research Officers</h3>
+                        <div style = 'overflow-x: auto;'>;
+                            <table class='table' id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>Officer Number</th>
+                                        <th>Full Name</th>
+                                        <th>Leave Type</th>
+                                        <th>Number of Days</th>
+                                        <th>From Date</th>
+                                        <th>To date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaveTableBody2">
+                                <?php
+                                    // Include the database connection file
+                                    include 'db.php';
+
+                                    // SQL query to retrieve all leaves from leave_applications table
+                                    $sql = "SELECT * FROM leave_applications_ero";
+                                    $result = $conn->query($sql);
+
+                                    // Check if there are any rows in the result set
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            // Output each row as a table row
+                                            echo "<tr>";
+                                            echo "<td>" . $row['officer_number'] . "</td>";
+                                            echo "<td>" . $row['name'] . "</td>";
+                                            echo "<td>" . $row['leave_type'] . "</td>";
+                                            echo "<td>" . $row['number_of_days'] . "</td>";
+                                            echo "<td>" . $row['from_date'] . "</td>";
+                                            echo "<td>" . $row['to_date'] . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        // Output a message if there are no leaves in the table
+                                        echo "<tr><td colspan='12'>No leaves found</td></tr>";
+                                    }
+
+                                    // Close the database connection
+                                    $conn->close();
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="card">
+                        <div class="card-body">
+                        <h3>Approved Leaves of Interns</h3>
                             <table class='table' id="table1">
                             <div class="row mb-3">
                             <div class="row mb-3">

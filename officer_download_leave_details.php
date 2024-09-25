@@ -156,7 +156,7 @@ $force = isset($_POST['forcee']) ? $_POST['forcee'] : '';
                     <section class="section">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of Officers</h3>
+                        <h3>Approved Leaves of Officers</h3>
                             
                         <div style = 'overflow-x: auto;'>;
                             <table class='table' id="table1">
@@ -267,7 +267,7 @@ $result = $conn->query($sql);
                 <div class="row mb-3">
                     <div class="card">
                         <div class="card-body">
-                        <h3>All Leaves of External Research Officers</h3>
+                        <h3>Approved Leaves of External Research Officers</h3>
                             <table class='table' id="table3">
                             <div class="row mb-3">
                             <div class="row mb-3">
